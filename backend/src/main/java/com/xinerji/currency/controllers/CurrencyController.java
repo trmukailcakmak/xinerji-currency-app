@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @RequestMapping(value = EndPointConstant.CURRENCY_CONTROLLER, produces={MediaType.APPLICATION_JSON_VALUE})
 public interface CurrencyController {
 
     @GetMapping(value = EndPointConstant.GET_CURRENCY_RATE_BY_DATE)
     @ApiOperation("get currency rate by date")
-    ResponseEntity<CurrencyResponse> getCurrencyRateByDate(@RequestBody CurrencyRequest request);
+    ResponseEntity<List<CurrencyResponse>> getCurrencyRateByDate(@RequestBody CurrencyRequest request);
 
 }

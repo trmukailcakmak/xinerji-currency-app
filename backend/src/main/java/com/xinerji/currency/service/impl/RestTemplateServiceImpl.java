@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -35,13 +36,12 @@ public class RestTemplateServiceImpl implements RestTemplateService {
     public List<Currency> callCurrencyService(String url) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String xmlResponse = restTemplate.getForObject(url, String.class);
+            ResponseEntity<String> restResponse = restTemplate.getForEntity(url, String.class);
 
-            List<Currency> currencyList = parseXmlToCurrencyList(xmlResponse);
+            List<Currency> currencyList = parseXmlToCurrencyList(restResponse.getBody());
 
             return currencyList;
         } catch (RestClientException e) {
-            e.printStackTrace();
             throw new XinerjiException(MessageKey.ERR019, this.messageSource.getMessage(MessageKey.ERR019, null, Locale.ENGLISH));
         } catch (Exception e) {
             throw new RuntimeException(e);

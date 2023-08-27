@@ -1,21 +1,18 @@
 package com.xinerji.currency.controllers.impl;
 
 import com.xinerji.currency.controllers.CurrencyController;
-import com.xinerji.currency.controllers.UserController;
 import com.xinerji.currency.model.dto.currency.CurrencyRequest;
 import com.xinerji.currency.model.dto.currency.CurrencyRequestDto;
 import com.xinerji.currency.model.dto.currency.CurrencyResponse;
 import com.xinerji.currency.model.dto.currency.CurrencyResponseDto;
-import com.xinerji.currency.model.dto.user.UserResponse;
-import com.xinerji.currency.model.dto.user.UserResponseDto;
 import com.xinerji.currency.model.mapper.CurrencyMapper;
-import com.xinerji.currency.model.mapper.UserMapper;
 import com.xinerji.currency.service.CurrencyService;
-import com.xinerji.currency.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class CurrencyControllerImpl implements CurrencyController {
@@ -29,10 +26,10 @@ public class CurrencyControllerImpl implements CurrencyController {
 
 
     @Override
-    public ResponseEntity<CurrencyResponse> getCurrencyRateByDate(CurrencyRequest request) {
+    public ResponseEntity<List<CurrencyResponse>> getCurrencyRateByDate(CurrencyRequest request) {
         CurrencyRequestDto requestDto = currencyMapper.mapRequestToRequestDto(request);
-        CurrencyResponseDto responseDto = currencyService.getCurrencyRateByDate(requestDto);
-        CurrencyResponse response = currencyMapper.mapResponseDtoToResponse(responseDto);
-        return ResponseEntity.ok(response);
+        List<CurrencyResponseDto> responseDtoList = currencyService.getCurrencyRateByDate(requestDto);
+        List<CurrencyResponse> responseList = currencyMapper.mapResponseDtoListToResponseList(responseDtoList);
+        return ResponseEntity.ok(responseList);
     }
 }
