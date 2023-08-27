@@ -45,6 +45,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 
             RestTemplate restTemplate = new RestTemplate();
             restResponse = restTemplate.getForEntity( url.toString(), String.class);
+            logger.info("RestTemplateServiceImpl.callCurrencyServiceByDate responsed");
 
             List<Currency> currencyList = parseXmlToCurrencyList(restResponse.getBody());
             List<CurrencyResponseDto> responseDtoList = currencyMapper.mapEntityListToResponseDtoList(currencyList);
