@@ -3,6 +3,8 @@ package com.xinerji.currency.service.impl;
 import com.xinerji.currency.constant.MessageKey;
 import com.xinerji.currency.exceptions.XinerjiException;
 import com.xinerji.currency.model.dto.currency.Currency;
+import com.xinerji.currency.model.dto.currency.CurrencyResponseDto;
+import com.xinerji.currency.model.mapper.CurrencyMapper;
 import com.xinerji.currency.service.RestTemplateService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,8 +23,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.StringReader;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -30,17 +30,18 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 
     private static final Logger logger = LoggerFactory.getLogger(RestTemplateServiceImpl.class);
 
+    private final CurrencyMapper currencyMapper= CurrencyMapper.INSTANCE;
     private final MessageSource messageSource;
 
     @Override
-    public List<Currency> callCurrencyService(String url) {
+    public List<CurrencyResponseDto> callCurrencyService(String url) {
         try {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> restResponse = restTemplate.getForEntity(url, String.class);
 
             List<Currency> currencyList = parseXmlToCurrencyList(restResponse.getBody());
-
-            return currencyList;
+            List<CurrencyResponseDto> responseDtoList = currencyMapper.mapEntityListToResponseDtoList(currencyList);
+            return responseDtoList;
         } catch (RestClientException e) {
             throw new XinerjiException(MessageKey.ERR019, this.messageSource.getMessage(MessageKey.ERR019, null, Locale.ENGLISH));
         } catch (Exception e) {

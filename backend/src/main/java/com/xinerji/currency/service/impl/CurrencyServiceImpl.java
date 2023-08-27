@@ -1,7 +1,6 @@
 package com.xinerji.currency.service.impl;
 
 import com.xinerji.currency.constant.ExternalServiceEndPointConstant;
-import com.xinerji.currency.model.dto.currency.Currency;
 import com.xinerji.currency.model.dto.currency.CurrencyRequestDto;
 import com.xinerji.currency.model.dto.currency.CurrencyResponseDto;
 import com.xinerji.currency.model.mapper.CurrencyMapper;
@@ -45,8 +44,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         url.append(year);
         url.append(".xml");
 
-        List<Currency> currencyList = restTemplateService.callCurrencyService( url.toString());
-        List<CurrencyResponseDto> responseDtoList = currencyMapper.mapEntityListToResponseDtoList(currencyList);
+        List<CurrencyResponseDto> responseDtoList = restTemplateService.callCurrencyService( url.toString());
         return responseDtoList;
     }
 
