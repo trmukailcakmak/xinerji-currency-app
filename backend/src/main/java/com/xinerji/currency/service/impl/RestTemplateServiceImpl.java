@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -37,16 +38,22 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 
     @Override
     public List<CurrencyResponseDto> callCurrencyServiceByDate(LocalDateTime dateTime) {
+        logger.info("RestTemplateServiceImpl.callCurrencyServiceByDate called");
+        ResponseEntity<String> restResponse = null;
         try {
             StringBuilder url = insertDateTimeIntoToUrlForCurrencyService(dateTime);
 
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> restResponse = restTemplate.getForEntity( url.toString(), String.class);
+            restResponse = restTemplate.getForEntity( url.toString(), String.class);
 
             List<Currency> currencyList = parseXmlToCurrencyList(restResponse.getBody());
             List<CurrencyResponseDto> responseDtoList = currencyMapper.mapEntityListToResponseDtoList(currencyList);
             return responseDtoList;
         } catch (RestClientException e) {
+            logger.error("RestTemplateServiceImpl.callCurrencyServiceByDate error: {}",e);
+            if (restResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new XinerjiException(MessageKey.ERR019, this.messageSource.getMessage(MessageKey.ERR019, null, Locale.ENGLISH));
+            }
             throw new XinerjiException(MessageKey.ERR019, this.messageSource.getMessage(MessageKey.ERR019, null, Locale.ENGLISH));
         } catch (Exception e) {
             throw new RuntimeException(e);
