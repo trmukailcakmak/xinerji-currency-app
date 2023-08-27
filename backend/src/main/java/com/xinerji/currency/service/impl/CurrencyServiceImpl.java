@@ -28,30 +28,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public List<CurrencyResponseDto> getCurrencyRateByDate(CurrencyRequestDto requestDto) {
 
-        String year = String.valueOf(requestDto.getDate().getYear());
-        String month = String.valueOf(requestDto.getDate().getMonthValue());
-        String day = String.valueOf(requestDto.getDate().getDayOfMonth());
-        month = zeroNumberCorrection(month);
-        day = zeroNumberCorrection(day);
-
-        StringBuilder url = new StringBuilder();
-        url.append(ExternalServiceEndPointConstant.GET_CURRENCY_RATE_SERVICE_URL);
-        url.append(year);
-        url.append(month);
-        url.append("/");
-        url.append(day);
-        url.append(month);
-        url.append(year);
-        url.append(".xml");
-
-        List<CurrencyResponseDto> responseDtoList = restTemplateService.callCurrencyService( url.toString());
+        List<CurrencyResponseDto> responseDtoList = restTemplateService.callCurrencyServiceByDate( requestDto.getDate());
         return responseDtoList;
-    }
-
-    private String zeroNumberCorrection(String number) {
-        if (Integer.valueOf(number)<10) {
-            number = "0" + number;
-        }
-        return number;
     }
 }
