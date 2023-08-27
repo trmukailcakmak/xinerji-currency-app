@@ -4,5 +4,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ExternalServiceEndPointConstant {
-    public static final String TRANSLATE_SERVICE_END_POINT = "https://api.mymemory.translated.net/get?q=";
+    public static final String GET_CURRENCY_RATE_SERVICE_URL = "https://www.tcmb.gov.tr/kurlar/";
 }
