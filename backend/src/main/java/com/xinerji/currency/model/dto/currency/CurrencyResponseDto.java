@@ -20,4 +20,6 @@ public class CurrencyResponseDto {
     private String crossRateUSD;
 
     private String crossRateOther;
+
+    private String currencyCode;
 }

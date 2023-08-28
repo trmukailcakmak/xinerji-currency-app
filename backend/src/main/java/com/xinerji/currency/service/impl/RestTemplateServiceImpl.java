@@ -105,8 +105,9 @@ public class RestTemplateServiceImpl implements RestTemplateService {
             String banknoteSelling = currencyElement.getElementsByTagName("BanknoteSelling").item(0).getTextContent();
             String crossRateUSD = currencyElement.getElementsByTagName("CrossRateUSD").item(0).getTextContent();
             String crossRateOther = currencyElement.getElementsByTagName("CrossRateOther").item(0).getTextContent();
+            String currencyCode = currencyElement.getAttribute("CurrencyCode");
 
-            currencyList.add(new Currency(isim, currencyName, forexBuying, forexSelling, banknoteBuying, banknoteSelling, crossRateUSD, crossRateOther));
+            currencyList.add(new Currency(isim, currencyName, forexBuying, forexSelling, banknoteBuying, banknoteSelling, crossRateUSD, crossRateOther, currencyCode));
         }
         return currencyList;
     }

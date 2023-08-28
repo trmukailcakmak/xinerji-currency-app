@@ -23,4 +23,6 @@ public class Currency {
     private String crossRateUSD;
 
     private String crossRateOther;
+
+    private String currencyCode;
 }

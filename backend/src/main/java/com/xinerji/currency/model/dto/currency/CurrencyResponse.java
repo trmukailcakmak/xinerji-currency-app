@@ -24,4 +24,6 @@ public class CurrencyResponse {
     private String crossRateUSD;
 
     private String crossRateOther;
+
+    private String currencyCode;
 }
