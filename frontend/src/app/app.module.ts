@@ -10,7 +10,8 @@ import { RegisterComponent } from './component/register/register.component';
 import { HomeComponent } from './component/home/home.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { BoardUserComponent } from './component/board-user/board-user.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 
 @NgModule({
@@ -24,6 +25,8 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     AppRoutingModule,
     FormsModule,
     HttpClientModule

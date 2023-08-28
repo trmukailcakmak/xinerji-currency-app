@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../_services/user.service';
+import {NotificationService} from './notification.service';
 
 @Component({
   selector: 'app-home',
@@ -9,8 +10,22 @@ import { UserService } from '../../_services/user.service';
 export class HomeComponent implements OnInit {
   currencies?: any;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private notifyService : NotificationService) { }
+  showToasterSuccess(title: string, msg: string): any {
+    this.notifyService.showSuccess(msg, title);
+  }
 
+  showToasterError(title: string, msg: string): any {
+    this.notifyService.showError(msg, title);
+  }
+
+  showToasterInfo(title: string, msg: string): any {
+    this.notifyService.showInfo(msg, title);
+  }
+
+  showToasterWarning(title: string, msg: string): any {
+    this.notifyService.showWarning(msg, title);
+  }
   onDateChange(event: Event): any {
     const selectedDate = (event.target as HTMLInputElement).value;
     console.log('Selected date:', selectedDate);
@@ -20,7 +35,8 @@ export class HomeComponent implements OnInit {
         this.currencies = data;
       },
       err => {
-        this.currencies = null; // JSON.parse(err.error).message;
+        this.currencies = null;
+        this.showToasterWarning('Warn', 'Cannot found any cuurency rate for this date');
       }
     );
   }
