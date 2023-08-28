@@ -1,5 +1,22 @@
 <div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
+  <div class="jumbotron text-center">
+    <h1>My First Bootstrap Page</h1>
+    <p>Resize this responsive page to see the effect!</p>
+  </div>
+  <div class="container" *ngFor="let role of content">
+    <div class="row">
+      <div class="col-sm-3">
+        {{ role.currencyCode }}
+      </div>
+      <div class="col-sm-3">
+        {{ role.currencyName }}
+      </div>
+      <div class="col-sm-3">
+        {{ role.forexBuying }}
+      </div>
+      <div class="col-sm-3">
+        {{ role.forexSelling }}
+      </div>
+    </div>
+  </div>
 </div>
