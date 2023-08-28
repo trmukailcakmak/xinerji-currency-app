@@ -1,9 +1,40 @@
 <div class="container">
   <div class="jumbotron text-center">
-    <h1>My First Bootstrap Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
+    <div class="row">
+      <div class="col-sm-8">
+        <h1>Find Currency Rate By Date</h1>
+      </div>
+      <div class="col-sm-4" style="margin-top: 60px">
+        <div class="col-13">
+          <input class="textbox-13" type="datetime-local">
+          <span class="focus-border-13"></span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="container" *ngFor="let role of content">
+  <table class="table">
+    <tr>
+      <th class="table__heading">Currency Code</th>
+      <th class="table__heading">Currency Name</th>
+      <th class="table__heading">Forex Buying</th>
+      <th class="table__heading">Forex Selling</th>
+      <th class="table__heading">Banknote Buying</th>
+      <th class="table__heading">Banknote Selling</th>
+      <th class="table__heading">Cross Rate USD</th>
+      <th class="table__heading">Cross Rate Other</th>
+    </tr>
+    <tr class="table__row" *ngFor="let currency of currencies">
+      <td class="table__content" data-heading="Currency Code">{{ currency.currencyCode }}</td>
+      <td class="table__content" data-heading="Currency Name">{{ currency.currencyName }}</td>
+      <td class="table__content" data-heading="Forex Buying">{{ currency.forexBuying }}</td>
+      <td class="table__content" data-heading="Forex Selling">{{ currency.forexSelling }}</td>
+      <td class="table__content" data-heading="Banknote Buying">{{ currency.banknoteBuying }}</td>
+      <td class="table__content" data-heading="Banknote Selling">{{ currency.banknoteSelling }}</td>
+      <td class="table__content" data-heading="Cross Rate USD">{{ currency.crossRateUSD }}</td>
+      <td class="table__content" data-heading="Cross Rate Other">{{ currency.crossRateOther }}</td>
+    </tr>
+  </table>
+  <!--<div class="container" >
     <div class="row">
       <div class="col-sm-1">
         {{ role.currencyCode }}
@@ -18,5 +49,5 @@
         {{ role.forexSelling }}
       </div>
     </div>
-  </div>
+  </div>-->
 </div>

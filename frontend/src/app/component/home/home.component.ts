@@ -7,17 +7,17 @@ import { UserService } from '../../_services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  content?: any;
+  currencies?: any;
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.userService.getCurrencyByDate('2023-08-25T00:00:00.000Z').subscribe(
       data => {
-        this.content = data;
+        this.currencies = data;
       },
       err => {
-        this.content = JSON.parse(err.error).message;
+        this.currencies = JSON.parse(err.error).message;
       }
     );
   }
