@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../_services/user.service';
-import {NotificationService} from './notification.service';
+import {NotificationService} from '../../_helpers/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,7 @@ import {NotificationService} from './notification.service';
 export class HomeComponent implements OnInit {
   currencies?: any;
 
-  constructor(private userService: UserService, private notifyService : NotificationService) { }
+  constructor(private userService: UserService, private notifyService: NotificationService) { }
   showToasterSuccess(title: string, msg: string): any {
     this.notifyService.showSuccess(msg, title);
   }
@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
       },
       err => {
         this.currencies = null;
+        console.log(err.error.message);
         this.showToasterWarning('Warn', 'Cannot found any cuurency rate for this date');
       }
     );

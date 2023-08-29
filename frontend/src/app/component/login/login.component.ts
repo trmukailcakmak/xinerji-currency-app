@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
 import { TokenStorageService } from '../../_services/token-storage.service';
 import {UserService} from "../../_services/user.service";
+import {NotificationService} from "../../_helpers/notification.service";
 
 @Component({
   selector: 'app-login',
@@ -18,8 +19,22 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private authService: AuthService, private userService: UserService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService, private userService: UserService, private tokenStorage: TokenStorageService, private notifyService: NotificationService) { }
+  showToasterSuccess(title: string, msg: string): any {
+    this.notifyService.showSuccess(msg, title);
+  }
 
+  showToasterError(title: string, msg: string): any {
+    this.notifyService.showError(msg, title);
+  }
+
+  showToasterInfo(title: string, msg: string): any {
+    this.notifyService.showInfo(msg, title);
+  }
+
+  showToasterWarning(title: string, msg: string): any {
+    this.notifyService.showWarning(msg, title);
+  }
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
@@ -42,12 +57,11 @@ export class LoginComponent implements OnInit {
           },
           err => {
             this.errorMessage = err.error.message;
-            this.isLoginFailed = true;
           });
       },
       err => {
         this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
+        this.showToasterWarning('Error', 'Login Failed');
       }
     );
   }
