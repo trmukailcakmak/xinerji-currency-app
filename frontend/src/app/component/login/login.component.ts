@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_services/auth.service';
 import { TokenStorageService } from '../../_services/token-storage.service';
-import {UserService} from "../../_services/user.service";
-import {NotificationService} from "../../_helpers/notification.service";
+import {UserService} from '../../_services/user.service';
+import {NotificationService} from '../../_helpers/notification.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private authService: AuthService, private userService: UserService, private tokenStorage: TokenStorageService, private notifyService: NotificationService) { }
+  constructor(private authService: AuthService, private userService: UserService, private tokenStorage: TokenStorageService, private notifyService: NotificationService, private router: Router) { }
   showToasterSuccess(title: string, msg: string): any {
     this.notifyService.showSuccess(msg, title);
   }
@@ -58,6 +59,7 @@ export class LoginComponent implements OnInit {
           err => {
             this.errorMessage = err.error.message;
           });
+        this.router.navigate(['/home']);
       },
       err => {
         this.errorMessage = err.error.message;
