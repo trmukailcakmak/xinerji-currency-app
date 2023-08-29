@@ -52,7 +52,6 @@ public class RestTemplateServiceImpl implements RestTemplateService {
             logger.info("RestTemplateServiceImpl.callCurrencyServiceByDate responsed");
             return responseDtoList;
         } catch (RestClientException e) {
-            logger.error("RestTemplateServiceImpl.callCurrencyServiceByDate error: {}",e);
             if (responseStatus == HttpStatus.NOT_FOUND) {
                 throwException(MessageKey.ERR06, Locale.ENGLISH);
             }
