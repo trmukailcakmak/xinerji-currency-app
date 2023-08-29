@@ -1,6 +1,6 @@
 package com.xinerji.currency.model.entity;
 
-import com.xinerji.currency.model.base.ExtendedModel;
+import com.xinerji.currency.model.base.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,11 +12,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-public class Users extends ExtendedModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Users extends BaseEntity {
 
     private String name;
 

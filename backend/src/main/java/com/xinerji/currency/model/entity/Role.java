@@ -1,6 +1,6 @@
 package com.xinerji.currency.model.entity;
 
-import com.xinerji.currency.model.base.ExtendedModel;
+import com.xinerji.currency.model.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,10 +10,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "roles")
-public class Role extends ExtendedModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Role extends BaseEntity {
 
     private String name;
 }

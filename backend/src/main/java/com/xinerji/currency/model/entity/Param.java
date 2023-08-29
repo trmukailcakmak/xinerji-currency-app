@@ -1,6 +1,6 @@
 package com.xinerji.currency.model.entity;
 
-import com.xinerji.currency.model.base.ExtendedModel;
+import com.xinerji.currency.model.base.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,11 +10,7 @@ import javax.persistence.*;
 @Table(name = "param")
 @Data
 @NoArgsConstructor
-public class Param extends ExtendedModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Param extends BaseEntity {
 
     @Column(unique = true)
     private String key;
