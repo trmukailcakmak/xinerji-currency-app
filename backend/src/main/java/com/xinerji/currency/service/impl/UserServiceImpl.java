@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public AuthResponseDto login(AuthRequestDto authRequestDto) {
         if (!userRepository.existsByEmail(authRequestDto.getUsername())) {
-            throw new XinerjiException(MessageKey.ERR01, this.messageSource.getMessage(MessageKey.ERR01, null, Locale.ENGLISH));
+            throwException(MessageKey.ERR01, Locale.ENGLISH);
         }
 
         Authentication authentication = authenticationManager.authenticate(
@@ -77,8 +77,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto findUserById(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> {
-            throw new XinerjiException(MessageKey.ERR01,this.messageSource.getMessage(MessageKey.ERR01,null, Locale.ENGLISH));
-                });
+            throw new XinerjiException(MessageKey.ERR01,this.messageSource.getMessage(MessageKey.ERR01,null, Locale.ENGLISH));});
+
         UserResponseDto responseDto = userMapper.mapEntityToResponseDto(user);
         return responseDto;
     }
@@ -92,17 +92,13 @@ public class UserServiceImpl implements UserService {
 
     private UserResponseDto savePerson(UserRequestDto userRequestDto, RoleEnum roleEnum) {
         if (userRepository.existsByEmail(userRequestDto.getEmail())) {
-            throw new XinerjiException(MessageKey.ERR07, this.messageSource.getMessage(MessageKey.ERR07, null, Locale.ENGLISH));
+            throwException(MessageKey.ERR02,Locale.ENGLISH);
         }
         if (userRequestDto.getPhone() != null && userRepository.existsByPhone(userRequestDto.getPhone())) {
-            throw new XinerjiException(MessageKey.ERR08, this.messageSource.getMessage(MessageKey.ERR08, null, Locale.ENGLISH));
+            throwException(MessageKey.ERR03,Locale.ENGLISH);
         }
-        if ((userRequestDto.getEmail() == null || userRequestDto.getEmail().equals("") || userRequestDto.getEmail().equals(" "))) {
-            throw new XinerjiException(MessageKey.ERR09, this.messageSource.getMessage(MessageKey.ERR09, null, Locale.ENGLISH));
-        }
-        if (userRequestDto.getName() == null) {
-            throw new XinerjiException(MessageKey.ERR010, this.messageSource.getMessage(MessageKey.ERR010, null, Locale.ENGLISH));
-        }
+        nullControl(userRequestDto.getEmail(), MessageKey.ERR04);
+        nullControl(userRequestDto.getEmail(), MessageKey.ERR05);
 
         Users user = userMapper.mapRequestDtoToEntity(userRequestDto);
         user.setPassword(passwordEncoder.encode((userRequestDto.getPassword())));
@@ -113,5 +109,16 @@ public class UserServiceImpl implements UserService {
         user = userRepository.save(user);
         UserResponseDto responseDto = userMapper.mapEntityToResponseDto(user);
         return responseDto;
+    }
+
+    private void throwException(String errCode, Locale locale) {
+        throw new XinerjiException(errCode, this.messageSource.getMessage(errCode, null, locale));
+    }
+
+    private void nullControl(String s, String errCode) {
+        s.trim();
+        if ((s == null || s.equals("") || s.equals(" "))) {
+            throwException(errCode, Locale.ENGLISH);
+        }
     }
 }

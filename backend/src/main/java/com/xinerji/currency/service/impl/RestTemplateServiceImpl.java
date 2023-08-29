@@ -39,28 +39,32 @@ public class RestTemplateServiceImpl implements RestTemplateService {
     @Override
     public List<CurrencyResponseDto> callCurrencyServiceByDate(LocalDateTime dateTime) {
         logger.info("RestTemplateServiceImpl.callCurrencyServiceByDate called");
-        ResponseEntity<String> restResponse = null;
+        HttpStatus responseStatus = null;
         try {
             StringBuilder url = insertDateTimeIntoToUrlForCurrencyService(dateTime);
 
             RestTemplate restTemplate = new RestTemplate();
-            restResponse = restTemplate.getForEntity( url.toString(), String.class);
-            logger.info("RestTemplateServiceImpl.callCurrencyServiceByDate responsed");
-
+            ResponseEntity<String> restResponse = restTemplate.getForEntity( url.toString(), String.class);
+            responseStatus = restResponse.getStatusCode();
             List<Currency> currencyList = parseXmlToCurrencyList(restResponse.getBody());
             List<CurrencyResponseDto> responseDtoList = currencyMapper.mapEntityListToResponseDtoList(currencyList);
+
+            logger.info("RestTemplateServiceImpl.callCurrencyServiceByDate responsed");
             return responseDtoList;
         } catch (RestClientException e) {
             logger.error("RestTemplateServiceImpl.callCurrencyServiceByDate error: {}",e);
-            if (restResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
-                throw new XinerjiException(MessageKey.ERR019, this.messageSource.getMessage(MessageKey.ERR019, null, Locale.ENGLISH));
+            if (responseStatus == HttpStatus.NOT_FOUND) {
+                throwException(MessageKey.ERR06, Locale.ENGLISH);
             }
-            throw new XinerjiException(MessageKey.ERR019, this.messageSource.getMessage(MessageKey.ERR019, null, Locale.ENGLISH));
+            throwException(MessageKey.ERR07, Locale.ENGLISH);
+            return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
+    private void throwException(String errCode, Locale locale) {
+        throw new XinerjiException(errCode, this.messageSource.getMessage(errCode, null, locale));
+    }
     private StringBuilder insertDateTimeIntoToUrlForCurrencyService(LocalDateTime dateTime) {
         String year = String.valueOf(dateTime.getYear());
         String month = String.valueOf(dateTime.getMonthValue());
