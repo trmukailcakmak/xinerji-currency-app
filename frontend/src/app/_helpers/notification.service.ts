@@ -10,19 +10,19 @@ export class NotificationService {
   constructor(private toastr: ToastrService) { }
 
   showSuccess(title: string, message: string): void {
-    this.toastr.success(message, title, { timeOut: 1000 });
+    this.toastr.success(message, title, { timeOut: 3000 });
   }
 
   showError(title: string, message: string): void {
-    this.toastr.error(message, title, { timeOut: 1000 });
+    this.toastr.error(message, title, { timeOut: 3000 });
   }
 
   showInfo(title: string, message: string): void {
-    this.toastr.info(message, title, { timeOut: 1000 });
+    this.toastr.info(message, title, { timeOut: 3000 });
   }
 
   showWarning(title: string, message: string): void {
-    this.toastr.warning(message, title, { timeOut: 1000 });
+    this.toastr.warning(message, title, { timeOut: 3000 });
   }
 
 }

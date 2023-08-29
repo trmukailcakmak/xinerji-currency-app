@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../_services/user.service';
 import {NotificationService} from '../../_helpers/notification.service';
+import {AppComponent} from '../../app.component';
 
 @Component({
   selector: 'app-home',
@@ -9,8 +10,11 @@ import {NotificationService} from '../../_helpers/notification.service';
 })
 export class HomeComponent implements OnInit {
   currencies?: any;
+  isLoggedIn?: any;
 
-  constructor(private userService: UserService, private notifyService: NotificationService) { }
+  constructor(private userService: UserService, private notifyService: NotificationService, private appComponent: AppComponent) {
+    this.isLoggedIn = appComponent.isLoggedIn;
+  }
   showToasterSuccess(title: string, msg: string): any {
     this.notifyService.showSuccess(msg, title);
   }
