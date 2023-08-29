@@ -33,17 +33,21 @@ export class HomeComponent implements OnInit {
   onDateChange(event: Event): any {
     const selectedDate = (event.target as HTMLInputElement).value;
     console.log('Selected date:', selectedDate);
+    if (this.isLoggedIn) {
+      this.userService.getCurrencyByDate(selectedDate.toString()+'T00:00:00.000Z').subscribe(
+        data => {
+          this.currencies = data;
+        },
+        err => {
+          this.currencies = null;
+          console.log(err.error.message);
+          this.showToasterWarning('Warn', 'Cannot found any cuurency rate for this date');
+        }
+      );
+    } else {
+      this.showToasterError('Error', 'Please login');
+    }
 
-    this.userService.getCurrencyByDate(selectedDate.toString()+'T00:00:00.000Z').subscribe(
-      data => {
-        this.currencies = data;
-      },
-      err => {
-        this.currencies = null;
-        console.log(err.error.message);
-        this.showToasterWarning('Warn', 'Cannot found any cuurency rate for this date');
-      }
-    );
   }
 
   ngOnInit(): void {

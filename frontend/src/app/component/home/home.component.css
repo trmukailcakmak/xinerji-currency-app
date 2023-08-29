@@ -65,6 +65,7 @@ h1, h4 {
   display: inline-block;
   position: relative;
 }
+
 .textbox-13 {
   border: 0;
   height: 30px;
@@ -77,7 +78,14 @@ h1, h4 {
   width: 275px;
   box-sizing: border-box;
   letter-spacing: 1px;
+  transition: border-color 0.4s; /* Eklenen geçiş özelliği */
 }
+
+.textbox-13:hover,
+.textbox-13:focus {
+  border-color: #3399FF; /* Fare üzerine gelindiğinde veya tıklandığında çizgi rengi değişir */
+}
+
 .textbox-13 ~ .focus-border-13 {
   position: absolute;
   bottom: 0;
@@ -86,6 +94,7 @@ h1, h4 {
   height: 2px;
   z-index: 99;
 }
+
 .textbox-13 ~ .focus-border-13:before,
 .textbox-13 ~ .focus-border-13:after {
   content: "";
@@ -97,11 +106,15 @@ h1, h4 {
   background-color: #3399FF;
   transition: 0.4s;
 }
+
 .textbox-13 ~ .focus-border-13:after {
   left: auto;
   right: 0;
 }
+
+.textbox-13:hover ~ .focus-border-13:before,
 .textbox-13:focus ~ .focus-border-13:before,
+.textbox-13:hover ~ .focus-border-13:after,
 .textbox-13:focus ~ .focus-border-13:after {
   width: 50%;
   transition: 0.4s;
