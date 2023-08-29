@@ -40,7 +40,7 @@ public class DatabaseConfiguration {
         config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
-        config.setPoolName("my xinerji db pool");
+        config.setPoolName("xinerji db pool");
         config.setMaximumPoolSize(2);
         return config;
     }
