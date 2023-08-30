@@ -27,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import static com.xinerji.currency.model.type.RoleEnum.ADMIN;
@@ -102,13 +103,25 @@ public class UserServiceImpl implements UserService {
 
         Users user = userMapper.mapRequestDtoToEntity(userRequestDto);
         user.setPassword(passwordEncoder.encode((userRequestDto.getPassword())));
-
+        List<Role> find = roleRepository.findAll();
+        ifRoleTableNull(find);
         Role roles = roleRepository.findByName(String.valueOf(roleEnum)).get();
         user.setRoles(Collections.singletonList(roles));
-
+        user.setDeleted(false);
         user = userRepository.save(user);
         UserResponseDto responseDto = userMapper.mapEntityToResponseDto(user);
         return responseDto;
+    }
+
+    private void ifRoleTableNull(List<Role> find) {
+        if (find.isEmpty() || find ==  null) {
+            Role r1 = new Role();
+            r1.setName("USER");
+            roleRepository.save(r1);
+            Role r2 = new Role();
+            r2.setName("ADMIN");
+            roleRepository.save(r2);
+        }
     }
 
     private void throwException(String errCode, Locale locale) {
