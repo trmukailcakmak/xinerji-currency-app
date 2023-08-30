@@ -56,7 +56,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
                 throwException(MessageKey.ERR06, Locale.ENGLISH);
             }
             throwException(MessageKey.ERR07, Locale.ENGLISH);
-            return null;
+            return Collections.emptyList();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

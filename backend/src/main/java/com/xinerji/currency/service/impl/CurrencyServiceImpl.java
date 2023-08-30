@@ -9,7 +9,6 @@ import com.xinerji.currency.service.RestTemplateService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,6 @@ public class CurrencyServiceImpl implements CurrencyService {
     private final CurrencyMapper currencyMapper= CurrencyMapper.INSTANCE;
 
     private final RestTemplateService restTemplateService;
-    private final MessageSource messageSource;
 
     @Override
     public List<CurrencyResponseDto> getCurrencyRateByDate(CurrencyRequestDto requestDto) {

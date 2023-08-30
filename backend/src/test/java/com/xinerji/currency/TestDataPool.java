@@ -4,6 +4,10 @@ import com.xinerji.currency.model.dto.auth.AuthRequest;
 import com.xinerji.currency.model.dto.auth.AuthRequestDto;
 import com.xinerji.currency.model.dto.auth.AuthResponse;
 import com.xinerji.currency.model.dto.auth.AuthResponseDto;
+import com.xinerji.currency.model.dto.currency.CurrencyRequest;
+import com.xinerji.currency.model.dto.currency.CurrencyRequestDto;
+import com.xinerji.currency.model.dto.currency.CurrencyResponse;
+import com.xinerji.currency.model.dto.currency.CurrencyResponseDto;
 import com.xinerji.currency.model.dto.user.UserRequest;
 import com.xinerji.currency.model.dto.user.UserRequestDto;
 import com.xinerji.currency.model.dto.user.UserResponse;
@@ -11,9 +15,13 @@ import com.xinerji.currency.model.dto.user.UserResponseDto;
 import com.xinerji.currency.model.entity.Role;
 import com.xinerji.currency.model.entity.Users;
 import com.xinerji.currency.model.type.RoleEnum;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TestDataPool {
@@ -23,6 +31,18 @@ public class TestDataPool {
     public TestDataPool(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
+    private static String test = "test";
+    public static CurrencyRequest createCurrencyRequest(){
+        CurrencyRequest request = new CurrencyRequest();
+        request.setDate(LocalDateTime.now());
+        return request;
+    }
+    public static CurrencyRequestDto createCurrencyRequestDto(){
+        CurrencyRequestDto request = new CurrencyRequestDto();
+        request.setDate(LocalDateTime.now());
+        return request;
+    }
+
     public static AuthRequest createLoginRequest(){
         AuthRequest request = new AuthRequest();
         request.setUsername("tr.mukailcakmak@gmail.com");
@@ -117,9 +137,104 @@ public class TestDataPool {
         requestDto.setPassword("111111");
         return requestDto;
     }
+
+    public static LocalDateTime createRestTemplateRequestDto(){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime tenDaysAgo = now.minus(10, ChronoUnit.DAYS);
+        return tenDaysAgo;
+    }
     public static AuthResponseDto createAuthResponseDto(){
         AuthResponseDto responseDto = new AuthResponseDto("test-token","tr.mukailcakmak@gmail.com");
         return responseDto;
+    }
+    public static CurrencyResponseDto createCurrencyResponseDto(){
+        CurrencyResponseDto responseDto = new CurrencyResponseDto();
+        responseDto.setIsim(test);
+        responseDto.setCurrencyName(test);
+        responseDto.setForexBuying(test);
+        responseDto.setForexSelling(test);
+        responseDto.setBanknoteBuying(test);
+        responseDto.setBanknoteSelling(test);
+        responseDto.setCrossRateUSD(test);
+        responseDto.setCrossRateOther(test);
+
+        return responseDto;
+    }
+    public static List<CurrencyResponseDto> createCurrencyResponseDtoList(){
+        List<CurrencyResponseDto> responseDtoList = new ArrayList<>();
+        CurrencyResponseDto responseDto = new CurrencyResponseDto();
+        responseDto.setIsim(test);
+        responseDto.setCurrencyName(test);
+        responseDto.setForexBuying(test);
+        responseDto.setForexSelling(test);
+        responseDto.setBanknoteBuying(test);
+        responseDto.setBanknoteSelling(test);
+        responseDto.setCrossRateUSD(test);
+        responseDto.setCrossRateOther(test);
+
+        responseDtoList.add(responseDto);
+        return responseDtoList;
+    }
+    public static ResponseEntity<Object> createRestTemplateForCallCurrencyResponseList(){
+        String response = "<?xml version=1.0 encoding=UTF-8?>" +
+                "<?xml-stylesheet type=text/xsl href=isokur.xsl?>" +
+                "<Tarih_Date Tarih=29.08.2023 Date=08/29/2023  Bulten_No=2023/164 >" +
+                "    <Currency CrossOrder=0 Kod=USD CurrencyCode=USD>" +
+                "        <Unit>1</Unit>" +
+                "        <Isim>ABD DOLARI</Isim>" +
+                "        <CurrencyName>US DOLLAR</CurrencyName>" +
+                "        <ForexBuying>26.5763</ForexBuying>" +
+                "        <ForexSelling>26.6242</ForexSelling>" +
+                "        <BanknoteBuying>26.5577</BanknoteBuying>" +
+                "        <BanknoteSelling>26.6641</BanknoteSelling>" +
+                "        <CrossRateUSD/>" +
+                "        <CrossRateOther/>" +
+                "    </Currency>" +
+                "</Tarih_Date>";
+        return ResponseEntity.ok(response);
+    }
+    public static List<CurrencyResponseDto> createRestTemplateResponseDtoList(){
+        List<CurrencyResponseDto> responseDtoList = new ArrayList<>();
+        CurrencyResponseDto responseDto = new CurrencyResponseDto();
+        responseDto.setIsim(test);
+        responseDto.setCurrencyName(test);
+        responseDto.setForexBuying(test);
+        responseDto.setForexSelling(test);
+        responseDto.setBanknoteBuying(test);
+        responseDto.setBanknoteSelling(test);
+        responseDto.setCrossRateUSD(test);
+        responseDto.setCrossRateOther(test);
+
+        responseDtoList.add(responseDto);
+        return responseDtoList;
+    }
+    public static CurrencyResponse createCurrencyResponse(){
+        CurrencyResponse response = new CurrencyResponse();
+        response.setIsim(test);
+        response.setCurrencyName(test);
+        response.setForexBuying(test);
+        response.setForexSelling(test);
+        response.setBanknoteBuying(test);
+        response.setBanknoteSelling(test);
+        response.setCrossRateUSD(test);
+        response.setCrossRateOther(test);
+
+        return response;
+    }
+    public static List<CurrencyResponse> createCurrencyResponseList(){
+        List<CurrencyResponse> responseList = new ArrayList<>();
+        CurrencyResponse response = new CurrencyResponse();
+        response.setIsim(test);
+        response.setCurrencyName(test);
+        response.setForexBuying(test);
+        response.setForexSelling(test);
+        response.setBanknoteBuying(test);
+        response.setBanknoteSelling(test);
+        response.setCrossRateUSD(test);
+        response.setCrossRateOther(test);
+
+        responseList.add(response);
+        return responseList;
     }
     public static AuthResponse createAuthResponse(){
         AuthResponse response = new AuthResponse();
