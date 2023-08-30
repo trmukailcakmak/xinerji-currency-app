@@ -1,0 +1,10 @@
+CREATE TABLE roles
+(
+    ID               SERIAL PRIMARY KEY,
+    CREATED_DATE     TIMESTAMP,
+    CREATED_USER     VARCHAR(128),
+    UPDATE_DATE      TIMESTAMP,
+    UPDATE_USER      VARCHAR(128),
+    DELETED          BOOLEAN,
+    name             VARCHAR(256) NOT NULL
+);
