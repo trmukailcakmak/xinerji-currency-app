@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserResponseDto savePerson(UserRequestDto userRequestDto, RoleEnum roleEnum) {
-        if (userRepository.existsByEmail(userRequestDto.getEmail())) {
+        if (userRequestDto.getEmail() == null || userRepository.existsByEmail(userRequestDto.getEmail())) {
             throwException(MessageKey.ERR02,Locale.ENGLISH);
         }
         if (userRequestDto.getPhone() != null && userRepository.existsByPhone(userRequestDto.getPhone())) {
